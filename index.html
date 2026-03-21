@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Сообщество — Худеем на здоровье</title>
+<style>
+:root{--teal:#2BC4A7;--teal-light:#E8F8F4;--bg:#FAFAFA;--card:#FFF;--text:#1A1A1A;--text2:#888;--streak-or:#FF6B35;--streak-yl:#FFB800;--border:#F0F0F0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#1A1A2E;font-family:-apple-system,'SF Pro Display','Segoe UI',Roboto,sans-serif;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:20px 0}
+::-webkit-scrollbar{display:none}
+.phone-frame{width:393px;height:852px;border-radius:44px;border:6px solid #2A2A3E;background:#000;position:relative;overflow:hidden;box-shadow:0 0 0 2px #444,0 20px 60px rgba(0,0,0,0.5)}
+.phone-frame::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:120px;height:28px;background:#000;border-radius:20px;z-index:300}
+.phone-frame::after{content:'';position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:130px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;z-index:300}
+.app{width:100%;height:100%;display:flex;flex-direction:column;background:linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 25%, #C8E6C9 55%, #E8F5E9 100%);position:relative;overflow:hidden;transition:background 0.5s}
+.header{padding:14px 16px 12px;background:rgba(255,255,255,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.header-title{font-size:17px;font-weight:700;color:var(--text)}
+.content{flex:1;overflow-y:auto;overflow-x:hidden}
+.subtabs{display:flex;background:rgba(255,255,255,0.8);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,0,0,0.06)}
+.subtab{flex:1;padding:12px 0;font-size:14px;font-weight:400;color:var(--text2);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer}
+.subtab.active{font-weight:600;color:var(--teal);border-bottom-color:var(--teal)}
+.card{background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.04);border:1px solid rgba(255,255,255,0.5)}
+.letter-ava{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;border-radius:50%}
+.today-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;border:1.5px solid var(--card);position:absolute;top:0;right:0}
+.chip{padding:6px 14px;border-radius:16px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text);white-space:nowrap}
+.chip.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+.stories{display:flex;gap:12px;overflow-x:auto;padding:12px 16px}
+.story{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:62px}
+.story-ring{width:52px;height:52px;border-radius:50%;padding:2.5px;position:relative;background:linear-gradient(135deg,var(--streak-or),var(--streak-yl));box-shadow:0 2px 8px rgba(255,107,53,0.2)}
+.story-inner{width:47px;height:47px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;position:relative}
+.story-badge{position:absolute;bottom:-3px;right:-3px;background:linear-gradient(135deg,var(--streak-or),var(--streak-yl));border-radius:9px;padding:1px 5px;font-size:9px;font-weight:700;color:#fff;border:2px solid var(--card)}
+.story-name{font-size:10px;color:var(--text2)}
+.post{margin:6px 16px}
+.post-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.post-name{font-weight:600;font-size:14px}
+.post-streak{font-size:10px;color:var(--streak-or);font-weight:600;margin-left:5px}
+.post-time{font-size:11px;color:var(--text2)}
+.post-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px}
+.post-text{font-size:14px;line-height:1.5;margin-bottom:10px}
+.post-actions{display:flex;gap:18px}
+.post-btn{display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-size:13px;color:var(--text2);padding:0}
+.post-btn.liked{color:#FF4757}
+.chat-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer}
+.chat-unread{background:var(--teal);color:#fff;border-radius:10px;font-size:11px;font-weight:700;min-width:20px;height:20px;display:flex;align-items:center;justify-content:center;padding:0 6px}
+.dialog-header{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--card)}
+.msg{max-width:75%}.msg.me{align-self:flex-end}.msg.them{align-self:flex-start}
+.msg-bubble{padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.4;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.msg.me .msg-bubble{background:var(--teal);color:#fff;border-bottom-right-radius:4px}
+.msg.them .msg-bubble{background:var(--card);color:var(--text);border-bottom-left-radius:4px}
+.msg-time{font-size:11px;color:var(--text2);margin-top:2px;padding:0 4px}
+.msg.me .msg-time{text-align:right}
+.dialog-input{display:flex;gap:8px;padding:10px 16px;border-top:1px solid var(--border);background:var(--card)}
+.dialog-input input{flex:1;border:1px solid var(--border);border-radius:24px;padding:10px 16px;font-size:14px;outline:none;background:var(--bg);font-family:inherit}
+.dialog-input input:focus{border-color:var(--teal)}
+.search-bar{margin:12px 16px 4px;display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:24px;padding:10px 16px;border:1px solid var(--border)}
+.search-bar input{flex:1;border:none;background:none;font-size:14px;outline:none;font-family:inherit}
+.fab{position:absolute;bottom:20px;right:16px;width:52px;height:52px;border-radius:50%;background:var(--teal);color:#fff;border:none;box-shadow:0 4px 16px rgba(43,196,167,0.4);cursor:pointer;z-index:50;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:300}
+.streak-backdrop{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:100;animation:fadeIn 0.2s}
+.streak-popup{position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:24px 24px 0 0;z-index:101;max-height:85%;overflow-y:auto;box-shadow:0 -4px 32px rgba(0,0,0,0.18);animation:slideUp 0.3s cubic-bezier(0.32,0.72,0,1)}
+.streak-hero{background:linear-gradient(135deg,var(--streak-or),var(--streak-yl));border-radius:20px;padding:22px 20px;text-align:center;color:#fff;margin:8px 20px 16px}
+.lb-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.lb-row.me{background:var(--teal-light);border-radius:12px;padding:8px 10px}
+.fire-overlay{position:absolute;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;animation:fadeIn 0.2s}
+.fire-card{background:var(--card);border-radius:24px;padding:28px 24px 20px;margin:20px;max-width:300px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.3);text-align:center;position:relative;animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+@keyframes fireParticle{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-200px) scale(0.3)}}
+@keyframes flameBurst{0%{transform:scale(0.2);opacity:0}50%{transform:scale(1.3);opacity:1}100%{transform:scale(1);opacity:1}}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+<div class="app" id="app">
+  <div class="header" id="header"></div>
+  <div class="content" id="content"></div>
+</div>
+</div>
+<script>
+const api={get:u=>fetch(u).then(r=>r.json()),post:(u,d)=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d||{})}).then(r=>r.json())};
+const tagColors={"Активность":{bg:"#E3F6ED",text:"#1A9E5C"},"Рецепт":{bg:"#FFF3E0",text:"#E67E22"},"Результат":{bg:"#E8F0FE",text:"#1A73E8"},"Мотивация":{bg:"#FDE8E8",text:"#D93025"}};
+const svgHeart=f=>f?'<svg width="20" height="20" viewBox="0 0 24 24" fill="#FF4757" stroke="#FF4757" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+const svgComment='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+const svgSend='<svg width="24" height="24" viewBox="0 0 24 24" fill="#2BC4A7"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>';
+const svgBack='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>';
+const svgSearch='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+const svgFire=s=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="#FF6B35"><path d="M12 23c-4.97 0-8-3.03-8-7 0-2.5 1.5-4.5 3-6 .5-.5 1.5-1.5 2-2.5C10 6 10 4 10 3c0 0 2 1 3 3s1 4 1 4c1-1.5 2-3 2-5 0 0 3 2.5 3 7 0 3.97-3.03 7-7 7z"/></svg>`;
+
+let me=null,allUsers=[],subTab='feed',currentDialog=null,feedFilter='all',challenges=[],todayFlames={};
+const firePhrases=["Огонь! Ты на верном пути 🔥","Так держать! 💪","Красавчик! 🚀","Мощно! ⚡","Серия растёт! 🏆","Вот это настрой! 🙌","Ты лучше, чем вчера ✨","Прогресс! 📈","Ближе к цели 🎯","Ты в огне! 🔥"];
+const motivePhrases=["Маленький прогресс — это всё ещё прогресс!","Ты уже круче 90% людей, которые только планируют начать","Забота о себе — это радость, а не обязанность","Каждый огонёк — шаг к лучшей версии себя","Стабильность — самый сложный навык. А ты его прокачиваешь"];
+
+function renderHeader(){const h=document.getElementById('header');if(currentDialog){h.style.display='none';return}h.style.display='flex';h.innerHTML=`<div style="width:36px"></div><span class="header-title">Сообщество</span><button onclick="showStreak()" style="background:none;border:none;cursor:pointer;padding:4px;position:relative;display:flex;align-items:center">${svgFire(26)}<span style="position:absolute;top:-2px;right:-6px;background:linear-gradient(135deg,var(--streak-or),var(--streak-yl));color:#fff;font-size:9px;font-weight:700;border-radius:8px;padding:1px 5px;border:1.5px solid var(--card);min-width:16px;text-align:center">${me?.flames||0}</span></button>`}
+
+async function renderContent(){const c=document.getElementById('content');if(currentDialog){await renderDialog(c);return}c.innerHTML=`<div class="subtabs"><button class="subtab ${subTab==='feed'?'active':''}" onclick="setSubTab('feed')">Лента</button><button class="subtab ${subTab==='chats'?'active':''}" onclick="setSubTab('chats')">Чаты</button></div><div id="sub-content"></div><button class="fab" onclick="showCreatePost()">+</button>`;if(subTab==='feed')await renderFeed();else await renderChats()}
+
+function setSubTab(t){subTab=t;renderContent()}
+
+async function renderFeed(){const el=document.getElementById('sub-content');const feedData=await api.get(`/api/feed${feedFilter!=='all'?'?tag='+feedFilter:''}`);const filters=[{id:"all",l:"Все"},{id:"Активность",l:"Активность"},{id:"Рецепт",l:"Рецепты"},{id:"Мотивация",l:"Мотивация"},{id:"Результат",l:"Результаты"}];
+el.innerHTML=`<div class="stories">${allUsers.map(u=>`<div class="story"><div class="story-ring"><div class="story-inner"><div class="letter-ava" style="width:43px;height:43px;font-size:18px;background:${u.avatarColor}">${u.avatar}</div>${u.todayActive?'<div class="today-dot"></div>':''}</div>${(u.flames||0)>0?`<div class="story-badge">🔥${u.flames}</div>`:''}</div><span class="story-name">${u.isCurrentUser?'Вы':u.name}</span></div>`).join('')}</div><div style="height:1px;background:var(--border)"></div><div style="display:flex;gap:6px;padding:10px 16px;overflow-x:auto">${filters.map(f=>`<button class="chip ${feedFilter===f.id?'active':''}" onclick="setFilter('${f.id}')">${f.l}</button>`).join('')}</div>${feedData.map(p=>`<div class="card post"><div class="post-header"><div class="letter-ava" style="width:38px;height:38px;font-size:15px;background:${p.userAvatarColor}">${p.userAvatar}</div><div style="flex:1"><div style="display:flex;align-items:center"><span class="post-name">${p.userName}</span><span class="post-streak">🔥${p.userFlames||0}</span></div><span class="post-time">${p.time}</span></div>${p.tag?`<span class="post-tag" style="background:${(tagColors[p.tag]||{}).bg||'#eee'};color:${(tagColors[p.tag]||{}).text||'#888'}">${p.tag}</span>`:''}</div><p class="post-text">${p.text}</p><div class="post-actions"><button class="post-btn ${p.liked?'liked':''}" onclick="toggleLike(${p.id})">${svgHeart(p.liked)} ${p.likes}</button><button class="post-btn">${svgComment} ${p.comments}</button></div></div>`).join('')}<div style="height:80px"></div>`}
+
+function setFilter(f){feedFilter=f;renderContent()}
+async function toggleLike(pid){await api.post(`/api/posts/${pid}/like`);renderContent()}
+
+async function renderChats(){const el=document.getElementById('sub-content');const chats=await api.get('/api/chats');el.innerHTML=`<div class="search-bar">${svgSearch}<input placeholder="Поиск..." id="chat-search" oninput="filterChats()"></div><div id="chat-list">${chats.map(c=>`<div class="chat-item" onclick="openDialog(${c.partnerId})"><div style="position:relative"><div class="letter-ava" style="width:48px;height:48px;font-size:20px;background:${c.partnerAvatarColor}">${c.partnerAvatar}</div>${c.partnerTodayActive?'<div class="today-dot" style="top:2px;right:2px"></div>':''}</div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between"><span style="font-weight:600;font-size:15px">${c.partnerName}</span><span style="font-size:12px;color:var(--text2)">${c.time}</span></div><div style="display:flex;justify-content:space-between;margin-top:2px"><span style="font-size:13px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:80%">${c.lastMsg}</span></div></div></div>`).join('')}</div><div style="height:80px"></div>`;window._chatData=chats}
+
+function filterChats(){const q=(document.getElementById('chat-search')?.value||'').toLowerCase();const el=document.getElementById('chat-list');if(!window._chatData)return;const f=window._chatData.filter(c=>!q||c.partnerName.toLowerCase().includes(q));el.innerHTML=f.length?f.map(c=>`<div class="chat-item" onclick="openDialog(${c.partnerId})"><div style="position:relative"><div class="letter-ava" style="width:48px;height:48px;font-size:20px;background:${c.partnerAvatarColor}">${c.partnerAvatar}</div></div><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:15px">${c.partnerName}</div><div style="font-size:13px;color:var(--text2)">${c.lastMsg}</div></div></div>`).join(''):'<div style="padding:40px;text-align:center;color:var(--text2)">Ничего не найдено</div>'}
+
+async function openDialog(pid){currentDialog=pid;renderHeader();await renderDialog(document.getElementById('content'))}
+async function renderDialog(el){const partner=allUsers.find(u=>u.id===currentDialog);const msgs=await api.get(`/api/chats/${currentDialog}/messages`);el.innerHTML=`<div class="dialog-header"><button onclick="closeDialog()" style="background:none;border:none;cursor:pointer;padding:0">${svgBack}</button><div class="letter-ava" style="width:36px;height:36px;font-size:15px;background:${partner?.avatarColor||'#888'}">${partner?.avatar||'?'}</div><div><div style="font-weight:600;font-size:15px">${partner?.name||''}</div><div style="font-size:11px;color:var(--streak-or);font-weight:600">🔥 ${partner?.flames||0} огоньков</div></div></div><div style="flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px" id="msgs">${msgs.map(m=>`<div class="msg ${m.from}"><div class="msg-bubble">${m.text}</div><div class="msg-time">${m.time}</div></div>`).join('')}</div><div class="dialog-input"><input id="msg-input" placeholder="Сообщение..." onkeydown="if(event.key==='Enter')sendMsg()"><button onclick="sendMsg()">${svgSend}</button></div>`;const msgEl=document.getElementById('msgs');if(msgEl)msgEl.scrollTop=msgEl.scrollHeight}
+function closeDialog(){currentDialog=null;renderHeader();renderContent()}
+async function sendMsg(){const input=document.getElementById('msg-input');const text=input?.value?.trim();if(!text)return;input.value='';const data=await api.post(`/api/chats/${currentDialog}/messages`,{text});const msgEl=document.getElementById('msgs');msgEl.insertAdjacentHTML('beforeend',`<div class="msg me"><div class="msg-bubble">${data.text}</div><div class="msg-time">${data.time}</div></div>`);msgEl.scrollTop=msgEl.scrollHeight}
+
+// ===== STREAK POPUP =====
+async function showStreak(){document.querySelectorAll('.streak-backdrop,.streak-popup').forEach(e=>e.remove());
+const [ranking,chs,tf]=await Promise.all([api.get('/api/ranking'),api.get('/api/challenges'),api.get('/api/flames/today')]);
+challenges=chs;todayFlames=tf;const league=me.league;const nxt=me.nextLeague;
+const todayCount=(tf.challenge?1:0)+(tf.goal?1:0)+(tf.extra?1:0);
+const bd=document.createElement('div');bd.className='streak-backdrop';bd.onclick=hideStreak;
+const p=document.createElement('div');p.className='streak-popup';
+p.innerHTML=`<div style="display:flex;justify-content:center;padding:12px 0 4px"><div style="width:40px;height:4px;border-radius:2px;background:#DDD"></div></div><div style="display:flex;justify-content:flex-end;padding:0 16px"><button onclick="hideStreak()" style="background:none;border:none;cursor:pointer;padding:4px;font-size:18px;color:var(--text2)">✕</button></div>
+<div class="streak-hero" style="background:${league.bg}"><div style="font-size:28px">${league.icon}</div><div style="font-size:12px;opacity:0.9;margin-top:4px">${league.name}</div><div style="font-size:44px;font-weight:800;line-height:1;margin:4px 0">${me.flames}</div><div style="font-size:13px">огоньков 🔥</div>${nxt?`<div style="font-size:11px;opacity:0.8;margin-top:6px">До ${nxt.icon} ${nxt.name}: ${nxt.flamesToGo} 🔥</div>`:''}</div>
+<div style="margin:0 20px 12px;background:#FFF8E1;border-radius:16px;padding:14px;display:flex;align-items:center;justify-content:center;gap:12px"><div style="text-align:center"><div style="font-size:24px;${tf.challenge?'':'opacity:0.3'}">🔥</div><div style="font-size:9px;color:${tf.challenge?'var(--streak-or)':'var(--text2)'};font-weight:600">Челлендж</div></div><div style="text-align:center"><div style="font-size:24px;${tf.goal?'':'opacity:0.3'}">🔥</div><div style="font-size:9px;color:${tf.goal?'var(--streak-or)':'var(--text2)'};font-weight:600">Цель</div></div><div style="text-align:center"><div style="font-size:24px;${tf.extra?'':'opacity:0.3'}">🔥</div><div style="font-size:9px;color:${tf.extra?'#D93025':'var(--text2)'};font-weight:600">Экстра</div></div><div style="font-size:18px;font-weight:800;color:var(--streak-or);margin-left:8px">${todayCount}/3</div></div>
+<div style="margin:0 20px 12px"><div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><span style="font-size:14px">${tf.challenge?'🔥':'⚪'}</span><span style="font-weight:600;font-size:14px">Челленджи</span></div>${chs.filter(c=>!c.isExtra).map(ch=>`<div style="background:${ch.completed?'var(--teal-light)':'#FFF'};border:1px solid ${ch.completed?'var(--teal)':'var(--border)'};border-radius:14px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:8px"><span style="font-size:18px">${ch.icon}</span><div style="flex:1"><div style="font-size:10px;color:var(--text2);font-weight:600">${ch.catIcon} ${ch.cat}</div><div style="font-size:12px;font-weight:500">${ch.text}</div></div>${ch.completed?'<span style="color:var(--teal)">✅</span>':(tf.challenge?'<span style="color:var(--text2)">—</span>':`<button onclick="doChallenge(${ch.id})" style="background:var(--teal);color:#fff;border:none;border-radius:12px;padding:5px 12px;font-size:10px;font-weight:600;cursor:pointer">Готово</button>`)}</div>`).join('')}</div>
+${chs.filter(c=>c.isExtra).map(ex=>`<div style="margin:0 20px 12px"><div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><span>${tf.extra?'🔥':'💀'}</span><span style="font-weight:600;font-size:14px;color:#D93025">Экстра</span></div><div style="background:${ex.completed?'var(--teal-light)':'#FFF'};border:2px solid ${ex.completed?'var(--teal)':'#D93025'};border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px"><span style="font-size:22px">${ex.icon}</span><div style="flex:1"><div style="font-size:12px;font-weight:600">${ex.text}</div></div>${ex.completed?'<span style="color:var(--teal)">✅</span>':`<button onclick="doChallenge(${ex.id})" style="background:#D93025;color:#fff;border:none;border-radius:12px;padding:6px 14px;font-size:10px;font-weight:600;cursor:pointer">Готово</button>`}</div></div>`).join('')}
+<div style="margin:0 20px 12px;background:#F3ECF7;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:8px"><span style="font-size:18px">❄️</span><div style="flex:1"><span style="font-weight:600;font-size:12px">Заморозки: ${me.freezesLeft}/3</span></div>${me.freezesLeft>0?`<button onclick="doFreeze()" style="background:none;border:1px solid #9C27B0;color:#9C27B0;border-radius:12px;padding:3px 10px;font-size:10px;font-weight:600;cursor:pointer">Использовать</button>`:''}</div>
+<div style="margin:0 20px 20px"><div style="font-weight:600;font-size:14px;margin-bottom:8px">Рейтинг</div>${ranking.map((u,i)=>`<div class="lb-row ${u.isCurrentUser?'me':''}"><span style="font-size:13px;font-weight:700;width:22px;text-align:center;color:${i<3?'var(--streak-or)':'var(--text2)'}">${i+1}</span><div style="position:relative"><div class="letter-ava" style="width:28px;height:28px;font-size:12px;background:${u.avatarColor}">${u.avatar}</div></div><span style="flex:1;font-weight:${u.isCurrentUser?700:500};font-size:13px">${u.isCurrentUser?'Вы':u.name} <span style="font-size:10px">${u.league.icon}</span></span><div style="display:flex;align-items:center;gap:3px">${svgFire(14)}<span style="font-weight:700;font-size:13px;color:var(--streak-or)">${u.flames}</span></div></div>`).join('')}</div>`;
+document.querySelector('.app').appendChild(bd);document.querySelector('.app').appendChild(p)}
+function hideStreak(){document.querySelectorAll('.streak-backdrop,.streak-popup').forEach(e=>e.remove())}
+
+// ===== FIRE CELEBRATION =====
+function showFireCelebration(bonus){const phrase=firePhrases[Math.floor(Math.random()*firePhrases.length)];const motive=motivePhrases[Math.floor(Math.random()*motivePhrases.length)];
+const o=document.createElement('div');o.id='fire-celebration';o.className='fire-overlay';
+for(let i=0;i<12;i++){const p=document.createElement('div');p.textContent='🔥';p.style.cssText=`position:absolute;font-size:${16+Math.random()*20}px;left:${30+Math.random()*40}%;bottom:35%;opacity:0;animation:fireParticle ${0.8+Math.random()*0.6}s ease-out ${Math.random()*0.3}s forwards;pointer-events:none`;o.appendChild(p)}
+const card=document.createElement('div');card.className='fire-card';
+card.innerHTML=`<button onclick="closeFireCelebration()" style="position:absolute;top:12px;right:12px;background:none;border:none;cursor:pointer;font-size:18px;color:var(--text2)">✕</button><div style="font-size:64px;animation:flameBurst 0.6s ease-out forwards">🔥</div><div style="font-size:20px;font-weight:800;color:var(--streak-or);margin-top:8px">+1 огонёк!</div>${bonus?`<div style="font-size:14px;font-weight:600;color:var(--teal);margin-top:4px">${bonus}</div>`:''}<div style="font-size:16px;font-weight:700;color:var(--text);margin-top:16px">${phrase}</div><div style="font-size:13px;color:var(--text2);margin-top:12px;line-height:1.5">${motive}</div><div style="font-size:11px;color:var(--text2);margin-top:16px">Всего: ${me.flames} 🔥</div>`;
+o.appendChild(card);document.querySelector('.app').appendChild(o)}
+function closeFireCelebration(){const el=document.getElementById('fire-celebration');if(el){el.style.transition='opacity 0.3s';el.style.opacity='0';setTimeout(()=>{el.remove();hideStreak();showStreak()},300)}}
+
+async function doChallenge(cid){const r=await api.post(`/api/challenges/${cid}/complete`);if(r.success){me=r.user;renderHeader();showFireCelebration(challenges.find(c=>c.id===cid)?.isExtra?'+2 за экстра! 💀':null)}}
+async function doFreeze(){await api.post('/api/freeze');me=await api.get('/api/me');hideStreak();showStreak()}
+
+// ===== CREATE POST =====
+function showCreatePost(){document.querySelectorAll('.sheet-overlay').forEach(e=>e.remove());const o=document.createElement('div');o.className='streak-backdrop';o.onclick=e=>{if(e.target===o)o.remove()};o.innerHTML=`<div style="position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:24px 24px 0 0;padding:20px;animation:slideUp 0.3s"><div style="display:flex;justify-content:center;margin-bottom:8px"><div style="width:40px;height:4px;border-radius:2px;background:#DDD"></div></div><div style="font-size:17px;font-weight:700;margin-bottom:16px">Новый пост</div><textarea id="new-post-text" placeholder="Что нового?..." style="width:100%;border:1px solid var(--border);border-radius:14px;padding:14px;font-size:14px;font-family:inherit;resize:none;height:100px;outline:none;background:var(--bg)"></textarea><button onclick="submitPost()" style="background:var(--teal);color:#fff;border:none;border-radius:24px;padding:12px 0;width:100%;font-size:15px;font-weight:600;cursor:pointer;margin-top:12px">Опубликовать</button></div>`;document.querySelector('.app').appendChild(o)}
+async function submitPost(){const text=document.getElementById('new-post-text')?.value?.trim();if(!text)return;await api.post('/api/posts',{text,tag:'Мотивация'});document.querySelectorAll('.streak-backdrop').forEach(e=>e.remove());feedFilter='all';await renderContent()}
+
+// ===== INIT =====
+async function init(){me=await api.get('/api/me');allUsers=await api.get('/api/users');renderHeader();await renderContent()}
+init();
+</script>
+</body>
+</html>
