@@ -1,7 +1,3 @@
-"""
-Database — SQLite: инициализация, seed-данные, хелперы.
-"""
-
 import sqlite3
 from datetime import datetime, timedelta
 

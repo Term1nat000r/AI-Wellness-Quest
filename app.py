@@ -1,14 +1,7 @@
-"""
-Худеем на здоровье — Community Backend
-Flask | Запуск: python3 app.py | http://localhost:5000
-"""
-
 from datetime import datetime
 from flask import Flask, request, jsonify, send_file
 
-from database import (
-    get_db, init_db, user_to_dict, get_me_id, time_ago, LEAGUES,
-)
+from database import get_db, init_db, user_to_dict, get_me_id, time_ago
 from gigachat import (
     generate_challenges, generate_extra_challenge,
     generate_motivation, generate_celebration,
@@ -161,7 +154,6 @@ def get_chats():
             "partnerTodayActive": p["last_active"] == today,
             "lastMsg": lm["text"] if lm else "",
             "time": time_ago(lm["created_at"]) if lm else "",
-            "unread": 0,
         })
     conn.close()
     return jsonify(chats)
@@ -396,7 +388,7 @@ def use_freeze():
     return jsonify({"success": True, "freezesLeft": u["freezes_left"] - 1})
 
 
-# ===== Мотивация (GigaChat) =====
+# ===== Мотивация и поздравления (GigaChat) =====
 
 @app.route("/api/motivation")
 def get_motivation():
@@ -412,11 +404,6 @@ def get_celebration():
     challenge_text = request.args.get("challenge", "")
     phrase = generate_celebration(challenge_text)
     return jsonify({"phrase": phrase})
-
-
-@app.route("/api/leagues")
-def get_leagues():
-    return jsonify(LEAGUES)
 
 
 # ===== Запуск =====

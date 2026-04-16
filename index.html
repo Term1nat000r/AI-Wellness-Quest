@@ -87,8 +87,6 @@ const svgSearch='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" str
 const svgFire=s=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="#FF6B35"><path d="M12 23c-4.97 0-8-3.03-8-7 0-2.5 1.5-4.5 3-6 .5-.5 1.5-1.5 2-2.5C10 6 10 4 10 3c0 0 2 1 3 3s1 4 1 4c1-1.5 2-3 2-5 0 0 3 2.5 3 7 0 3.97-3.03 7-7 7z"/></svg>`;
 
 let me=null,allUsers=[],subTab='feed',currentDialog=null,feedFilter='all',challenges=[],todayFlames={};
-const firePhrases=["Огонь! Ты на верном пути 🔥","Так держать! 💪","Красавчик! 🚀","Мощно! ⚡","Серия растёт! 🏆","Вот это настрой! 🙌","Ты лучше, чем вчера ✨","Прогресс! 📈","Ближе к цели 🎯","Ты в огне! 🔥"];
-const motivePhrases=["Маленький прогресс — это всё ещё прогресс!","Ты уже круче 90% людей, которые только планируют начать","Забота о себе — это радость, а не обязанность","Каждый огонёк — шаг к лучшей версии себя","Стабильность — самый сложный навык. А ты его прокачиваешь"];
 
 function renderHeader(){const h=document.getElementById('header');if(currentDialog){h.style.display='none';return}h.style.display='flex';h.innerHTML=`<div style="width:36px"></div><span class="header-title">Сообщество</span><button onclick="showStreak()" style="background:none;border:none;cursor:pointer;padding:4px;position:relative;display:flex;align-items:center">${svgFire(26)}<span style="position:absolute;top:-2px;right:-6px;background:linear-gradient(135deg,var(--streak-or),var(--streak-yl));color:#fff;font-size:9px;font-weight:700;border-radius:8px;padding:1px 5px;border:1.5px solid var(--card);min-width:16px;text-align:center">${me?.flames||0}</span></button>`}
 
@@ -129,7 +127,7 @@ document.querySelector('.app').appendChild(bd);document.querySelector('.app').ap
 function hideStreak(){document.querySelectorAll('.streak-backdrop,.streak-popup').forEach(e=>e.remove())}
 
 // ===== FIRE CELEBRATION =====
-function showFireCelebration(bonus){const phrase=firePhrases[Math.floor(Math.random()*firePhrases.length)];const motive=motivePhrases[Math.floor(Math.random()*motivePhrases.length)];
+function showFireCelebration(phrase,motive,bonus){
 const o=document.createElement('div');o.id='fire-celebration';o.className='fire-overlay';
 for(let i=0;i<12;i++){const p=document.createElement('div');p.textContent='🔥';p.style.cssText=`position:absolute;font-size:${16+Math.random()*20}px;left:${30+Math.random()*40}%;bottom:35%;opacity:0;animation:fireParticle ${0.8+Math.random()*0.6}s ease-out ${Math.random()*0.3}s forwards;pointer-events:none`;o.appendChild(p)}
 const card=document.createElement('div');card.className='fire-card';
@@ -137,7 +135,7 @@ card.innerHTML=`<button onclick="closeFireCelebration()" style="position:absolut
 o.appendChild(card);document.querySelector('.app').appendChild(o)}
 function closeFireCelebration(){const el=document.getElementById('fire-celebration');if(el){el.style.transition='opacity 0.3s';el.style.opacity='0';setTimeout(()=>{el.remove();hideStreak();showStreak()},300)}}
 
-async function doChallenge(cid){const r=await api.post(`/api/challenges/${cid}/complete`);if(r.success){me=r.user;renderHeader();showFireCelebration(challenges.find(c=>c.id===cid)?.isExtra?'+2 за экстра! 💀':null)}}
+async function doChallenge(cid){const ch=challenges.find(c=>c.id===cid);const r=await api.post(`/api/challenges/${cid}/complete`);if(r.success){me=r.user;renderHeader();const [celeb,motiv]=await Promise.all([api.get(`/api/celebration?challenge=${encodeURIComponent(ch?.text||'')}`),api.get('/api/motivation')]);showFireCelebration(celeb.phrase,motiv.phrase,ch?.isExtra?'+2 за экстра! 💀':null)}}
 async function doFreeze(){await api.post('/api/freeze');me=await api.get('/api/me');hideStreak();showStreak()}
 
 // ===== CREATE POST =====
