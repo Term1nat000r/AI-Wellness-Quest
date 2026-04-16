@@ -1,4 +1,3 @@
-<img width="559" height="700" alt="level3-backend-components" src="https://github.com/user-attachments/assets/a01645ea-6e5a-4ca4-809b-a7cdbacb7f44" />
 # AI Wellness Quest
 
 Веб-приложение для трекинга здоровья с AI-генерацией. Backend — Flask, frontend — HTML/CSS/JS, AI — GigaChat API.
@@ -15,7 +14,8 @@
 
 ### Уровень 2 — Контейнеры
 
-![Контейнеры](./docs/level2-containers.png)
+![Контейнеры]<img width="4060" height="1329" alt="level2_containers-dark" src="https://github.com/user-attachments/assets/1ae22bd2-4821-471c-850f-acb6e283d98f" />
+
 
 ### Уровень 3 — Компоненты (app.py)
 
