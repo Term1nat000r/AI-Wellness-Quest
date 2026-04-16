@@ -19,11 +19,12 @@
 
 ### Уровень 3 — Компоненты (app.py)
 
-![Компоненты](./docs/level3-components.png)
+![Компоненты]<img width="1840" height="2458" alt="level3_components-dark" src="https://github.com/user-attachments/assets/4dece853-3455-4ac2-aad3-6cb4aaaa0267" />
 
 ### Уровень 4 — Код (gigachat.py)
 
-![Код](./docs/level4-code.png)
+![Код]<img width="2630" height="2588" alt="level4_code-dark" src="https://github.com/user-attachments/assets/cd3d4a9e-038c-4dfa-ac03-d47668cef90d" />
+
 
 ---
 
