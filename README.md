@@ -49,7 +49,7 @@
 
 ### Уровень 1 — Контекст
 
-<img width="1909" height="604" alt="image" src="https://github.com/user-attachments/assets/2d7d87fa-9ac1-44ea-8e41-3d84326babd8" />
+<img width="2380" height="700" alt="level1_context-dark" src="https://github.com/user-attachments/assets/bc0a45aa-c0ed-403e-b230-4b7590ab8574" />
 
 **Элементы:** Пользователь → AI Wellness Quest → GigaChat API
 
@@ -57,7 +57,7 @@
 
 ### Уровень 2 — Контейнеры
 
-<img width="4060" height="1329" alt="level2_containers-dark" src="https://github.com/user-attachments/assets/1ae22bd2-4821-471c-850f-acb6e283d98f" />
+<img width="4060" height="1220" alt="level2_containers-dark" src="https://github.com/user-attachments/assets/59bea15e-74c9-4bb9-9f28-604716c33ab8" />
 
 **Элементы:** Веб-интерфейс (HTML/CSS/JS) | Backend API (Flask) | База данных (SQLite) | AI Генератор (Python) | GigaChat API
 
@@ -65,7 +65,7 @@
 
 ### Уровень 3 — Компоненты (app.py)
 
-<img width="1840" height="2458" alt="level3_components-dark" src="https://github.com/user-attachments/assets/4dece853-3455-4ac2-aad3-6cb4aaaa0267" />
+<img width="1840" height="2348" alt="level3_components-dark" src="https://github.com/user-attachments/assets/9dadc011-9b43-4c90-b3ed-c02e04391964" />
 
 **Элементы:** Лента API | Чаты API | Огоньки API | Челленджи API | Мотивация API | База данных | AI Генератор
 
@@ -73,7 +73,7 @@
 
 ### Уровень 4 — Код (gigachat.py)
 
-<img width="2630" height="2588" alt="level4_code-dark" src="https://github.com/user-attachments/assets/cd3d4a9e-038c-4dfa-ac03-d47668cef90d" />
+<img width="2630" height="2446" alt="level4_code-dark" src="https://github.com/user-attachments/assets/2b7cdc3d-0cc1-43a0-881b-72d794b25c52" />
 
 **Элементы:** _get_token() | _chat() | _parse_json() | generate_challenges() | generate_extra_challenge() | generate_motivation() | generate_celebration() | _fallback_* | GigaChat API
 
