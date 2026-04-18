@@ -25,7 +25,7 @@
 ---
 ## Демо
 
-Визуал приложения можно посмотреть [здесь](https://raw.githubusercontent.com/Term1nat000r/AI-Wellness-Quest/master/src/index.html) — откройте в любом браузере.
+Визуал приложения можно посмотреть в файле [`index.html`](https://raw.githubusercontent.com/Term1nat000r/AI-Wellness-Quest/master/src/index.html) — откройте его в любом браузере.
 
 ---
 
